@@ -11,42 +11,51 @@ let App= () => {
   useEffect(() => {
        
     //add
-    firestore.collection("users").add({ body: "this is val 2" })
+   // firestore.collection("users").add({ body: "this is val 2" })
 
-     //get all data in that collections
-    //  async function f() {
+  //  //  get all data in that collections
+  //    async function f() {
          
-    //   //get() is a promise based function
-    //    let querySnapshot = await firestore.collection("users").get();
+  //     //get() is a promise based function
+          //  firestore.collection("users")-> this line takes me to the "users" collection 
+          //.get() gives me the all data at that time in "users" collection in object form
 
-    //     for(let i = 0 ; i < querySnapshot.docs.length ; i++){
-          
-    //       console.log(querySnapshot.docs[i].data());
+  //      let querySnapshot = await firestore.collection("users").get();
+             
+          //  querysnapshot.docs is an array of all objects in that "users" collection 
+  //       for(let i = 0 ; i < querySnapshot.docs.length ; i++){
+           
+             //we use .data() to get data of that object
+  //         console.log(querySnapshot.docs[i].data());
 
-    //     }  
+  //       }  
 
         
 
-    //  }
-    //  f();
+  //    }
+  //    f();
+      
+     
+
 
     //get single
 
-    //this gives you the ref of that document
-    let f = async () => {
-         
-      let docRef = firestore.collection("users").doc("Yn0y1cjISraHa9xngpqr");
+    
+  //   let f = async () => {
 
-      let documentSnapshot = await docRef.get();
+  //   //this gives you the ref of that document   (not actual document)  
+  //     let docRef = firestore.collection("users").doc("Yn0y1cjISraHa9xngpqr");
 
-      console.log(documentSnapshot.exists);
+  //     let documentSnapshot = await docRef.get();
+
+  //     console.log(documentSnapshot.exists);
 
 
-    }  
+  //   }  
 
-    f();
+  //   f();
 
-  } ,[]) 
+   } ,[]) 
 
 
   return (

@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line
 import { useState } from "react";
 import "./videoCard.css";
 
@@ -15,6 +15,7 @@ let VideoCard = () => {
            
            <span className="video-card-music">
             <span class="material-icons">music_note</span>
+            
             <marquee>some song</marquee>
             
            </span>
@@ -39,32 +40,21 @@ let VideoCard = () => {
 
             {commentBoxOpen ? (
               <div className ="video-card-comment-box">
-                
+
+
                  <div className = "actual-comments">
                    
+                 
                     <div className = "post-user-comment">
                     <img alt="" src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"/> 
                       
-                       <div>
-                         
+                       <div>   
                           <h5>user name</h5>
                           <p>This is actual comment</p>
-
                         </div>
 
                      </div>
 
-                     <div className = "post-user-comment">
-                    <img alt="" src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80"/> 
-                      
-                       <div>
-                         
-                          <h5>user name</h5>
-                          <p>This is actual comment</p>
-
-                        </div>
-
-                     </div>
 
                  </div>
 

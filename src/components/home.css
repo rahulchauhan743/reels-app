@@ -1,7 +1,7 @@
 .home-logout-btn {
     position: fixed;
-    bottom: 4rem;
-    right: 20px;
+    bottom: 5rem;
+    right: 49px;
     height: 5rem;
     width: 5rem;
     border: none;
@@ -15,4 +15,13 @@
       scroll-snap-type: y mandatory;
       background-color: black;
       overflow-y: scroll
+  }
+
+  input[type="file"] {
+    width: 6rem;
+    border: none;
+    outline: none;
+    position: fixed;
+    bottom: 13rem;
+    right: 46px;
   }

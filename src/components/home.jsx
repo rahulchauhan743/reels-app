@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { authContext } from "../AuthProvider";
-import { auth } from "../firebase";
+import { auth, storage } from "../firebase";
 import VideoCard from "./VideoCard";
 
 
@@ -13,15 +13,14 @@ let Home = () => {
   
   return(
      <>
-     
-     {user ? "" : <Redirect to = "/login" />}
+      {/* agar user nhi he tho mujhe login par Redirect kardo */}
+      {/* if user is null and does not have user object so Redirect to login */}
+
+      { user ? "" : <Redirect to = "/login" /> }
 
      <div className = "video-container">
-           <VideoCard/>
-           <VideoCard/>
-           <VideoCard/><VideoCard/>
-           <VideoCard/>
-           <VideoCard/><VideoCard/>
+           <VideoCard/> <VideoCard/> <VideoCard/>
+          
      </div>
      
      <button 
@@ -32,8 +31,66 @@ let Home = () => {
                     auth.signOut();
                 }
             }>
-              logout
+              LOGOUT
          </button>
+
+         <input
+            type="file"//for inputting a file
+
+             //e.currentTarget.value = null-> THIS IS DONE NULL BECAUSE IF USER UPLOAD SAME NAME VIDEO AGAIN SO HE CAN UPLOAD THE  SAME VIDEO AGAIN
+             //AS INPUT COMPARES NEW FILE NAME WITH PREVIOUS ONE
+            onClick = {
+              (e) => {
+                e.currentTarget.value = null;
+              }
+            }  
+
+            onChange = {
+
+              (e) => {
+                 let videoObj = e.currentTarget.files[0];//e.currentTarget.files gives file object and zero element of that object gives that files we uploaded
+
+                 let {name , size, type} = videoObj;//that file has many property as name,size,type in object form so we stored particular property of that video in videoObj object
+
+                 size = size / 1000000;
+
+                if (size > 10) {
+                  alert("file size exceeds 10mb");//as we dont want a video greater than 10 mb to be uploaded
+                  return;
+                }
+
+                type = type.split("/")[0];
+
+                if (type !== "video") {
+                  alert("Please upload a video file");//as we dont want a file other than "video" type to be uploaded
+                  return;
+                } 
+                
+                //SO HERE WE BRING REFERENCE OF THE LOCATION WHERE WE WANT TO STORE THE VIDEO AND PUT THE THE VIDEO THERE
+                //WE USE USER.UID TO IDENTIFY WHICH USER UPLOADED WHICH VIDEO
+                //WE USE .PUT() METHOD TO UPLOAD VIDEO IN STORAGE
+                let uploadTask = storage.ref(`/posts/${user.uid}/${Date.now() + "-" + name}`).put(videoObj);
+
+                // .on() is a eventlistener where "state_changed" is event 
+                // where when the event is changed so these function exectues
+                // first function tell progress of event
+                // second function tell error if event fails
+                // third function is exectues after event is done  
+
+                uploadTask.on("state_changed", ()=>{}, ()=>{}, () => { 
+                   
+                  // getDownloadURL() gives url of that uploaded video 
+                  // it is a promise based so use .then() when promise is resolved so we do something with that url
+                  
+                    uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+                       console.log(url);
+                    })
+                }) 
+
+              }
+            }
+          
+         />
   
 
      </> 
