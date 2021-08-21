@@ -1,7 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { authContext } from "../AuthProvider";
-import { auth, storage } from "../firebase";
+import { auth, storage ,firestore} from "../firebase";
 import VideoCard from "./VideoCard";
 
 
@@ -10,6 +10,32 @@ import "./home.css";
 let Home = () => {
   
   let user = useContext(authContext);
+  let [posts,setPosts] = useState([]);
+
+  useEffect(()=>{
+   
+    firestore.collection("posts").onSnapshot((querySnapshot) =>{
+
+      let docArr = querySnapshot.docs; 
+
+       let arr = [];
+       
+       for (let i = 0; i < docArr.length; i++) {
+        
+         arr.push({
+           id: docArr[i].id,
+           ...docArr[i].data(),
+         })
+        
+       }
+         
+       setPosts(arr);
+    })
+
+
+  },[])
+ 
+
   
   return(
      <>
@@ -19,7 +45,12 @@ let Home = () => {
       { user ? "" : <Redirect to = "/login" /> }
 
      <div className = "video-container">
-           <VideoCard/> <VideoCard/> <VideoCard/>
+
+             {posts.map((el)=>{
+                 return <VideoCard key = {el.id} data = {el} />
+             })
+
+             } 
           
      </div>
      
@@ -84,6 +115,15 @@ let Home = () => {
                   
                     uploadTask.snapshot.ref.getDownloadURL().then((url) => {
                        console.log(url);
+                       
+                       //user ki uploaded video ko database me dal diya gya 
+                       firestore.collection("posts").add({
+                         name: user.displayName,
+                         url,
+                         likes: [],
+                         comments: [],
+                       })
+
                     })
                 }) 
 

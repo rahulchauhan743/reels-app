@@ -81,6 +81,7 @@ let AuthProvider = (props) =>{
        <authContext.Provider value = {user}>
        {/* jab loading false he tho AuthProvider ke childern dikha do agar uske chidren he tho*/}
            
+           
            {!loading && props.children}  
 
        </authContext.Provider>
