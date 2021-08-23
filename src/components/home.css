@@ -1,13 +1,42 @@
 .home-logout-btn {
     position: fixed;
-    bottom: 5rem;
+    bottom: 3rem;
     right: 49px;
     height: 5rem;
     width: 5rem;
     border: none;
     border-radius: 50%;
+    background-color: black;
   }
 
+  .image-upload>input {
+    display: none;
+  }
+
+  
+
+  #profile {
+    position: fixed;
+    bottom: 34rem;
+    right: 4rem;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    border: none;
+   
+  }
+
+  .sd{
+    width: 4rem;
+    height: 17rem;
+    font-size: 4.5rem;
+    position: fixed;
+    top: 45px;
+    right: 68px;
+  }
+
+  .ds{font-size: 4.5rem;
+    color: white;}
   
   .video-container{
       height: 100vh;
@@ -22,6 +51,7 @@
     border: none;
     outline: none;
     position: fixed;
-    bottom: 13rem;
-    right: 46px;
+    bottom: 20rem;
+    right: 47px;
+    border-radius: 17%;
   }

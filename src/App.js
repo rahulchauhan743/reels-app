@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./components/home";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
 
 import AuthProvider from "./AuthProvider";
 import { useEffect } from "react";
@@ -69,6 +70,10 @@ let App= () => {
           
           <Route exact path="/Login">
              <Login />
+          </Route> 
+
+          <Route exact path="/Profile">
+             <Profile />
           </Route> 
 
           <Route exact path="/">

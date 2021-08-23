@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { authContext } from "../AuthProvider";
 import { auth, storage ,firestore} from "../firebase";
 import VideoCard from "./VideoCard";
+
 
 
 import "./home.css";
@@ -12,19 +13,22 @@ let Home = () => {
   let user = useContext(authContext);
   let [posts,setPosts] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
    
+    // onSnapshot is EventListener which is used when there is change in posts collection data so it execute the given function
     firestore.collection("posts").onSnapshot((querySnapshot) =>{
+      // querySnapshot is the snapshot of all document in posts
 
-      let docArr = querySnapshot.docs; 
+      //it bring all object in posts collection 
+      let docArr = querySnapshot.docs; //it is the data present in posts collection
 
        let arr = [];
-       
+      // here we take put post data from database and store it in array to pass it to VideoCard
        for (let i = 0; i < docArr.length; i++) {
         
          arr.push({
            id: docArr[i].id,
-           ...docArr[i].data(),
+           ...docArr[i].data()//give data of single document
          })
         
        }
@@ -45,7 +49,8 @@ let Home = () => {
       { user ? "" : <Redirect to = "/login" /> }
 
      <div className = "video-container">
-
+             
+             {/* videoCard ko data pass kardiya jisme uploaded video ki details he */}
              {posts.map((el)=>{
                  return <VideoCard key = {el.id} data = {el} />
              })
@@ -62,10 +67,22 @@ let Home = () => {
                     auth.signOut();
                 }
             }>
-              LOGOUT
+              <span class="material-icons ds">
+                logout
+             </span>
          </button>
 
+
+         <Link to = "/Profile">
+            <button id="profile"><span class="material-icons sd"> 
+                                      account_circle
+                                 </span> 
+            </button>
+         </Link>
+
+        
          <input
+            className = "dfg"
             type="file"//for inputting a file
 
              //e.currentTarget.value = null-> THIS IS DONE NULL BECAUSE IF USER UPLOAD SAME NAME VIDEO AGAIN SO HE CAN UPLOAD THE  SAME VIDEO AGAIN
@@ -116,7 +133,7 @@ let Home = () => {
                     uploadTask.snapshot.ref.getDownloadURL().then((url) => {
                        console.log(url);
                        
-                       //user ki uploaded video ko database me dal diya gya 
+                       //user ki uploaded video li details ko database me dal diya gya 
                        firestore.collection("posts").add({
                          name: user.displayName,
                          url,
